@@ -368,7 +368,7 @@ public class GameCore implements GameCoreInterface {
      */
     @Override
     public String ignore(String name, String ignoreName) {
-		if( name.equals(ignoreName) )
+		if( name.equalsIgnoreCase(ignoreName) )
 			return "You can't ignore yourself.";
 	
 		//verify player being ignored exists
