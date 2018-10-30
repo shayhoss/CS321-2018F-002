@@ -1,5 +1,4 @@
 # CS321-2018F-002
-# CS321-2018F-002
 # Player Chat System ![CI status](https://img.shields.io/badge/build-passing-brightgreen.svg)
 
 Player Chat System is a series of Java classes entailed chatting and communication.
