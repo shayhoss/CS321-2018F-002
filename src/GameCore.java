@@ -289,6 +289,10 @@ public class GameCore implements GameCoreInterface {
                 return "You cannot whisper yourself";
             else
             {
+
+		    if(playerSending.searchIgnoreList(name2)){
+			    return "Cannot whisper player in your ignore list";
+		    }
                 if(!playerSending.searchIgnoredBy(playerReceiving.getName())) {
                     this.broadcast(playerSending, playerReceiving, playerSending.getName() + " whispers, \"" + message + "\"");
                     playerReceiving.setLastWhisperName(name1);
