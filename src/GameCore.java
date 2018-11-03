@@ -4,6 +4,7 @@
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
 
 /**
  *
@@ -12,6 +13,7 @@ import java.util.logging.Logger;
 public class GameCore implements GameCoreInterface {
     private final PlayerList playerList;
     private final Map map;
+    Date myDate;
     
     /**
      * Creates a new GameCoreObject.  Namely, creates the map for the rooms in the game,
@@ -23,6 +25,8 @@ public class GameCore implements GameCoreInterface {
         
         // Generate the game map.
         map = new Map();
+	myDate = new Date();
+
         
         playerList = new PlayerList();
         
@@ -62,7 +66,7 @@ public class GameCore implements GameCoreInterface {
         for(Player otherPlayer : this.playerList) {
             if(otherPlayer != player && otherPlayer.getCurrentRoom() == player.getCurrentRoom()
 			    && !player.searchIgnoredBy( otherPlayer.getName() )) {	// 405_ignore, don't broadcast to players ignoring you
-                otherPlayer.getReplyWriter().println(message);
+                otherPlayer.getReplyWriter().println(message + " " + myDate.toString());
             }
         }
     }
@@ -75,7 +79,7 @@ public class GameCore implements GameCoreInterface {
     public void broadcastShout(Player player, String message) {
         for(Player otherPlayer : this.playerList) {
             if(otherPlayer != player && !player.searchIgnoredBy( otherPlayer.getName())) {
-                otherPlayer.getReplyWriter().println(message);
+                otherPlayer.getReplyWriter().println(message + " " + myDate.toString());
             }
         }
     }
@@ -90,7 +94,7 @@ public class GameCore implements GameCoreInterface {
     public void broadcast(Player sendingPlayer, Player receivingPlayer, String message) {
         if(sendingPlayer != receivingPlayer
 			&& !sendingPlayer.searchIgnoredBy( receivingPlayer.getName() )) { //405_ignore, don't broadcast to players ignoring you
-            receivingPlayer.getReplyWriter().println(message);
+            receivingPlayer.getReplyWriter().println(message + " " + myDate.toString());
         }
     }
   
@@ -101,9 +105,10 @@ public class GameCore implements GameCoreInterface {
      */   
     @Override
     public void broadcast(Room room, String message) {
+
         for(Player player : this.playerList) {
             if(player.getCurrentRoom() == room.getId()) {
-                player.getReplyWriter().println(message);
+                player.getReplyWriter().println(message + " " + myDate.toString());
             }
         }
     }
@@ -231,7 +236,7 @@ public class GameCore implements GameCoreInterface {
         Player player = this.playerList.findPlayer(name);
         if(player != null) {
             this.broadcast(player, player.getName() + " says, \"" + message + "\"");
-            return "You say, \"" + message + "\"";
+            return "You say, \"" + message + "\"" + myDate.toString();
         }
         else {
             return null;
@@ -290,13 +295,10 @@ public class GameCore implements GameCoreInterface {
             else
             {
 
-		    if(playerSending.searchIgnoreList(name2)){
-			    return "Cannot whisper player in your ignore list";
-		    }
                 if(!playerSending.searchIgnoredBy(playerReceiving.getName())) {
-                    this.broadcast(playerSending, playerReceiving, playerSending.getName() + " whispers, \"" + message + "\"");
+                    this.broadcast(playerSending, playerReceiving, playerSending.getName() + " whispers, \"" + message + "\"" + " " + myDate.toString());
                     playerReceiving.setLastWhisperName(name1);
-                    return "Message sent to " + playerReceiving.getName();
+                    return "Message sent to " + playerReceiving.getName() + " " + myDate.toString();
                 }
                 else {
                     return "";
@@ -426,17 +428,17 @@ public class GameCore implements GameCoreInterface {
     @Override
     public String ignore(String name, String ignoreName) {
 		if( name.equalsIgnoreCase(ignoreName) )
-			return "You can't ignore yourself.";
+			return "You can't ignore yourself." + " " + myDate.toString();
 	
 		//verify player being ignored exists
 		Player ignoredPlayer = this.playerList.findPlayer(ignoreName);
 		if( ignoredPlayer == null )
-			return "Player " + ignoreName + " is not in the game.";
+			return "Player " + ignoreName + " is not in the game." + " " + myDate.toString();
 	
 		Player thisPlayer = this.playerList.findPlayer(name);
 		//verify player is not already in ignore list
 		if( thisPlayer.searchIgnoreList(ignoreName) )
-			return "Player " + ignoreName + " is in ignored list.";
+			return "Player " + ignoreName + " is in ignored list." + " " + myDate.toString();
 
 		//add ignoreName to ignore list
 		thisPlayer.ignorePlayer(ignoreName);
