@@ -27,6 +27,7 @@ public class GameCore implements GameCoreInterface {
     private final int minimumSpawnTime=100, maximumSpawnTime=600;
 
     private final Shop shop;
+    Date date;
 
     private ArrayList<Battle> activeBattles; //Handles all battles for all players on the server.
     private ArrayList<Battle> pendingBattles;
@@ -42,6 +43,7 @@ public class GameCore implements GameCoreInterface {
         
         // Generate the game map. with the proper filename!
         map = new Map(this, filename);
+	date = new Date();
         playerList = new PlayerList();
 
         shop = new Shop();
@@ -343,13 +345,13 @@ public class GameCore implements GameCoreInterface {
         if(playerSending != null && playerReceiving != null)
         {
             if(name1.equalsIgnoreCase(name2))
-                return "Cannot whisper yourself";
+                return "Cannot whisper yourself " + date.toString();
             else
             {
                 if(!playerSending.searchIgnoredBy(playerReceiving.getName())) {
-                    this.broadcast(playerSending, playerReceiving, playerSending.getName() + " whispers, \"" + message + "\"");
+                    this.broadcast(playerSending, playerReceiving, playerSending.getName() + " whispers, \"" + message + "\"" + " " + date.toString());
                     playerReceiving.setLastWhisperName(name1);
-                    return "Message sent to " + playerReceiving.getName();
+                    return "Message sent to " + playerReceiving.getName() + " " + date.toString();
                 }
                 else {
                     return "";
@@ -359,7 +361,7 @@ public class GameCore implements GameCoreInterface {
         else
         {
             if(playerReceiving == null)
-                return "Couldn't find player online.";
+                return "Couldn't find player online. " + date.toString();
             return null;
         }
     }
@@ -373,7 +375,7 @@ public class GameCore implements GameCoreInterface {
     public String reply(String name, String message) {
         Player playerSending = this.playerList.findPlayer(name);
         if(playerSending.getLastWhisperName() == null) {
-            return "You have not received a whisper to reply to.";
+            return "You have not received a whisper to reply to. " + date.toString();
         }
         String name2 = playerSending.getLastWhisperName();
         Player playerReceiving = this.playerList.findPlayer(name2);
@@ -807,25 +809,25 @@ public class GameCore implements GameCoreInterface {
     //408
     public String unIgnore(String name, String unIgnoreName) {
 		if( name.equalsIgnoreCase(unIgnoreName) )
-			return "You can't unignore yourself since you can't ignore yourself...";
+			return "You can't unignore yourself since you can't ignore yourself..." + " " + date.toString();
 
 		//verify player being unignored exists
 		Player unIgnoredPlayer = this.playerList.findPlayer(unIgnoreName);
 		if( unIgnoredPlayer == null )
-			return "Player " + unIgnoreName + " is not in the game.";
+			return "Player " + unIgnoreName + " is not in the game." + " " + date.toString();
 
 		Player thisPlayer = this.playerList.findPlayer(name);
 
 		//verify player is in Ignore list
 		if( !thisPlayer.searchIgnoreList(unIgnoreName) )
-			return "Player " + unIgnoreName + " is not in ignored list.";
+			return "Player " + unIgnoreName + " is not in ignored list." + " " + date.toString();
 
 		//remove ignoreName in ignore list
 		thisPlayer.unIgnorePlayer(unIgnoreName);
 
 		//add ignoring player to ignored players ignoredBy list
 		unIgnoredPlayer.removeIgnoredBy(name);
-		return unIgnoreName + " removed from ignore list.";
+		return unIgnoreName + " removed from ignore list." + " " + date.toString();
     }
     /* STOP 408_ignore */
 
