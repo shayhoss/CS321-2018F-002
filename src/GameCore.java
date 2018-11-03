@@ -236,7 +236,7 @@ public class GameCore implements GameCoreInterface {
         Player player = this.playerList.findPlayer(name);
         if(player != null) {
             this.broadcast(player, player.getName() + " says, \"" + message + "\"");
-            return "You say, \"" + message + "\"" + myDate.toString();
+            return "You say, \"" + message + "\"" + " " + myDate.toString();
         }
         else {
             return null;
