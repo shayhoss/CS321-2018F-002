@@ -307,7 +307,7 @@ public class GameCore implements GameCoreInterface {
         Player player = this.playerList.findPlayer(name);
         if(player != null) {
             this.broadcast(player, player.getName() + " says, \"" + message + "\"");
-            return "You say, \"" + message + "\"";
+            return "You say, \"" + message + "\"" + " " + date.toString();
         }
         else {
             return null;
@@ -324,7 +324,7 @@ public class GameCore implements GameCoreInterface {
         Player player = this.playerList.findPlayer(name);
         if(player != null) {
             this.broadcastShout(player, player.getName() + " shouts, \"" + message + "\"");
-            return "You shout, \"" + message + "\"";
+            return "You shout, \"" + message + "\"" + " " + date.toString();
         }
         else {
             return null;
