@@ -520,6 +520,7 @@ public class GameCore implements GameCoreInterface {
     * @param message Message to whisper
     * @return Message showing success.
     */
+    //
     public String whisper(String name1, String name2, String message, ArrayList<String> censorList) {
         Player playerSending = this.playerList.findPlayer(name1);
         Player playerReceiving = this.playerList.findPlayer(name2);
