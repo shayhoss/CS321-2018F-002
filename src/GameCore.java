@@ -147,7 +147,7 @@ public class GameCore implements GameCoreInterface {
                         room = map.randomRoom();
                         room.addObject(object);
                         
-                        GameCore.this.broadcast(room, "You see a student rush past and drop a " + object.getItemName() + " on the ground.");
+                        //GameCore.this.broadcast(room, "You see a student rush past and drop a " + object.getItemName() + " on the ground.");
 
                     } catch (InterruptedException ex) {
                         Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,7 +171,7 @@ public class GameCore implements GameCoreInterface {
                         room = map.randomRoom();
                         room.addSpirit(spirit);
 
-                        GameCore.this.broadcast(room, "A wild " + spirit + " has appeared!");
+                        //GameCore.this.broadcast(room, "A wild " + spirit + " has appeared!");
 
                     } catch (InterruptedException ex) {
                         Logger.getLogger(GameObject.class.getName()).log(Level.SEVERE, null, ex);
@@ -195,13 +195,13 @@ public class GameCore implements GameCoreInterface {
                     }
                     if (timeOfDay == DAY) {
                         timeOfDay = NIGHT;
-                        broadcastGlobal("Darkness falls on the world, be wary of monsters at night.");
+                       // broadcastGlobal("Darkness falls on the world, be wary of monsters at night.");
                         synchronized (npclist) {
                             npclist.addAllNPC(nighttimeNpcList);
                         }
                     } else {
                         timeOfDay = DAY;
-                        broadcastGlobal("The sun rises, illuminating the sky. Many monsters shriek and flee.");
+                        //broadcastGlobal("The sun rises, illuminating the sky. Many monsters shriek and flee.");
                         synchronized (npclist) {
                             npclist.removeAllNPC(nighttimeNpcList);
                         }
@@ -476,7 +476,7 @@ public class GameCore implements GameCoreInterface {
             }
 
             String log = player.getName() + " says, \"" +
-                    message + "\" in the room " + player.getCurrentRoom();
+                    message + "\" in the room " + player.getCurrentRoom() + " " + date.toString();;
             add_chat_log(log);
             message = scrubMessage( message, censorList); //409_censor scrub message of unwanted words
             this.broadcast(player, chatPrefix + player.getName() + " says, \"" + message + "\"");
@@ -501,7 +501,7 @@ public class GameCore implements GameCoreInterface {
             if(player.getIsDrunk()){
                 message = drunkText(message);
             }
-            String log = player.getName() + " shouts, \"" + message + "\"";
+            String log = player.getName() + " shouts, \"" + message + "\"" + " " + date.toString();;
             add_chat_log(log);
             message = scrubMessage( message, censorList); //409_censor scrub message of unwanted words
             this.broadcastShout(player, chatPrefix + player.getName() + " shouts, \"" + message + "\"");

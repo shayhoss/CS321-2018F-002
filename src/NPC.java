@@ -104,7 +104,7 @@ abstract class NPC {
   
   protected void doAi() {
     synchronized (this) {
-        moveRandomly();
+       // moveRandomly();
     }
   }
 } //EOF

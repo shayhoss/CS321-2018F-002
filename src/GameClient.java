@@ -51,17 +51,17 @@ public class GameClient {
     public void gameTimer(){
         TimerTask timerTask = new TimerTask(){
             public void run(){
-                try{
-                    remoteGameInterface.leave(playerName);
-                    runListener = false;
-                    System.out.println("User has been inactive for 5 minutes.. logging off");
-                    timer.cancel();
+               // try{
+                //    remoteGameInterface.leave(playerName);
+               //     runListener = false;
+               //     System.out.println("User has been inactive for 5 minutes.. logging off");
+                 //   timer.cancel();
 
-                    System.exit(-1);
-                }
-                catch (RemoteException ex) {
-                    Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                   // System.exit(-1);
+                //}
+                //catch (RemoteException ex) {
+                  //  Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+                //}
             }
         };
         timer = new Timer();
@@ -75,17 +75,17 @@ public class GameClient {
     public void update(){
         TimerTask timerTask = new TimerTask(){
             public void run(){
-                try{
-                    remoteGameInterface.leave(playerName);
-                    runListener = false;
-                    System.out.println("User has been inactive for 5 minutes.. logging off");
-                    remoteGameInterface.GCPlayerQuit(playerName); //416_GroupChat
-		    timer.cancel();
-                    System.exit(-1);
-                }
-                catch (RemoteException ex) {
-                    Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                //try{
+                  //  remoteGameInterface.leave(playerName);
+                    //runListener = false;
+                    //System.out.println("User has been inactive for 5 minutes.. logging off");
+                    //remoteGameInterface.GCPlayerQuit(playerName); //416_GroupChat
+		    //timer.cancel();
+              //      System.exit(-1);
+                //}
+                //catch (RemoteException ex) {
+                  //  Logger.getLogger(GameClient.class.getName()).log(Level.SEVERE, null, ex);
+                //}
             }
         };
         timer.cancel();
